@@ -121,5 +121,5 @@ for l in dataurl_list:
                     
           }
             scraperwiki.sqlite.save(unique_keys=['today','url'],data=package_dict)
-         print('****************end---'+package_name+'---end****************')
 
+        print('****************end---'+package_name+'---end****************')

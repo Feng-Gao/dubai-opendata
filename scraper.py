@@ -61,6 +61,9 @@ for l in dataurl_list:
         #we are now on the actual dataset detail page
         result = requests.get(package_url,headers=headers)
         soup = BeautifulSoup(result.content,features='lxml')
+        
+        if soup.head.title.text == 'Error':
+          continue
 
         package_org = soup.find(attrs={'class':'dataset-author'}).a.text.strip()
         

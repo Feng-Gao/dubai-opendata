@@ -11,6 +11,12 @@ import re
 import scraperwiki
 import datetime
 
+
+import sys  
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 #we need random ua to bypass website security check
 ua = UserAgent()
 headers = {'User-Agent':ua.random}

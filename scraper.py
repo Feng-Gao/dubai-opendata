@@ -39,7 +39,7 @@ for l in dataurl_list:
     #get all data sets
     package_blocks = soup.find_all(attrs={'class':'data-item'})
     for p in package_blocks:
-        package_name = p.find(attrs={'class':'title'}).a.text
+        package_name = p.find(attrs={'class':'title'}).a.text.strip()
         print(package_name)
         package_url = "https://www.dubaipulse.gov.ae"+p.a['href']
         print(package_url)
@@ -56,13 +56,13 @@ for l in dataurl_list:
         result = requests.get(package_url,headers=headers)
         soup = BeautifulSoup(result.content,features='lxml')
 
-        package_org = soup.find(attrs={'class':'dataset-author'}).a.text
+        package_org = soup.find(attrs={'class':'dataset-author'}).a.text.strip()
         
         package_desc = '"'+soup.find(attrs={'class':'additional-desc'}).text.strip()+'"'
         
         package_provenance = '"'+soup.find(string='Data Provenance').parent.parent.td.text.strip()+'"'
         
-        package_tags = '|'.join([x.text for x in soup.find(attrs={'class':'dataset-keywords'}).td.find_all('span')])
+        package_tags = '|'.join([x.text.strip() for x in soup.find(attrs={'class':'dataset-keywords'}).td.find_all('span')])
         
         package_frequency_source = soup.find(string='Frequency of Update on Source').parent.parent.parent.td.text.strip()
        
@@ -75,7 +75,7 @@ for l in dataurl_list:
         package_resource_num = str(len(resource_blocks))
 
         for r in resource_blocks:
-            resource_name = r.find(attrs={'class':'file-title'}).a.text
+            resource_name = r.find(attrs={'class':'file-title'}).a.text.strip()
             print(resource_name)
             resource_meta_url = "https://www.dubaipulse.gov.ae"+r.find(attrs={'class':'file-title'}).a['href']
             print(resource_meta_url)
@@ -84,11 +84,11 @@ for l in dataurl_list:
             result = requests.get(resource_meta_url,headers=headers)
             soup = BeautifulSoup(result.content,features='lxml')
             #because text formating issue, the string itself can not be exactly matched so we use re to find the element
-            resource_created = soup.find(string=re.compile('Created')).parent.parent.td.text
+            resource_created = soup.find(string=re.compile('Created')).parent.parent.td.text.strip()
             
-            resource_updated = soup.find(string=re.compile('Last updated')).parent.parent.td.text
+            resource_updated = soup.find(string=re.compile('Last updated')).parent.parent.td.text.strip()
             
-            resource_format = soup.find(string=re.compile('Format')).parent.parent.td.text
+            resource_format = soup.find(string=re.compile('Format')).parent.parent.td.text.strip()
             
             row = package_url +','+ package_name+','+package_desc+','+package_org+','+package_topics \
                 +','+package_tags+','+','+package_frequency_sdp+','+package_updated+','+package_api\

@@ -56,7 +56,7 @@ for l in dataurl_list:
         except:
             package_api = ''
         
-        package_updated = p.find(attrs={'class':'update-date'}).text.strip().split(':')[1]
+        
         
         #we are now on the actual dataset detail page
         result = requests.get(package_url,headers=headers)
@@ -79,7 +79,8 @@ for l in dataurl_list:
         
         package_column = str(len(soup.find_all(attrs={'class':'showmoreDataLoop'})))
         
-
+        package_updated = soup.find(attrs={'class':'update-date'}).text.strip().split(':')[1]
+        
         resource_blocks = soup.find_all(attrs={'class':'file-item'})
         package_resource_num = str(len(resource_blocks))
 

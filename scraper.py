@@ -87,9 +87,9 @@ for l in dataurl_list:
         for r in resource_blocks:
             resource_name = r.find(attrs={'class':'file-title'}).a.text.strip()
             print(resource_name)
-            resource_meta_url = "https://www.dubaipulse.gov.ae"+r.find(attrs={'class':'file-title'}).a['href']
+            resource_meta_url = r.find(attrs={'class':'file-title'}).a['href']
             print(resource_meta_url)
-            resource_file_url = "https://www.dubaipulse.gov.ae"+r.find(attrs={'class':'file-action'}).a['href']
+            resource_file_url = r.find(attrs={'class':'file-action'}).a['href']
 
             result = requests.get(resource_meta_url,headers=headers)
             soup = BeautifulSoup(result.content,features='lxml')
@@ -130,6 +130,6 @@ for l in dataurl_list:
                     'resource_format':resource_format,
                     
           }
-            scraperwiki.sqlite.save(unique_keys=['today','url'],data=package_dict)
+            scraperwiki.sqlite.save(unique_keys=['today','resource_file_url'],data=package_dict)
 
         print('****************end---'+package_name+'---end****************')
